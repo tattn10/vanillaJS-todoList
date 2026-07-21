@@ -7,7 +7,7 @@ const todos = JSON.parse(localStorage.getItem("todos")) || [];
 // ======================================
 // DOM Elements
 // ======================================
-
+const searchInput = document.getElementById("search-input");
 const todoInput = document.getElementById("todo-input");
 const addButton = document.getElementById("add-btn");
 const todoList = document.getElementById("todo-list");
@@ -29,7 +29,7 @@ function createTodoItem(todo){
 
         const span = document.createElement("span");
         span.textContent = todo.text;
-
+        
         const completeButton = document.createElement("button");
         const editButton = document.createElement("button");
         const deleteButton = document.createElement("button");
@@ -62,10 +62,13 @@ function createTodoItem(todo){
         // ======================================
         // Event Listeners
         // ======================================
+        searchInput.addEventListener("input", () => {
 
+    renderTodos();
+
+});
         completeButton.addEventListener("click", () => {
             todo.completed = !todo.completed;
-
             saveTodos();
             renderTodos();
         });
@@ -105,6 +108,7 @@ function createTodoItem(todo){
         li.appendChild(completeButton);
         li.appendChild(editButton);
         li.appendChild(deleteButton);
+
          return li;
 
     }
@@ -121,15 +125,18 @@ function createTodoItem(todo){
 // ======================================
 
 function renderTodos() {
+
     todoList.innerHTML = "";
 
-    for (const todo of todos) {
+    const searchText= searchInput.value.toLowerCase().trim();
+    const filteredTodos= todos.filter(todo=>todo.text.toLowerCase().includes(searchText));
 
-      const todoItem=createTodoItem(todo);
-        
-        todoList.appendChild(todoItem);
+    for (const todo of filteredTodos){
+        const newItem= createTodoItem(todo);
+        todoList.appendChild(newItem);
     }
-        updateStats();
+    updateStats();
+
 }
 
 // ======================================
