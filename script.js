@@ -23,17 +23,8 @@ const remainingTasks = document.getElementById("remaining-tasks");
 function saveTodos() {
     localStorage.setItem("todos", JSON.stringify(todos));
 }
-
-// ======================================
-// Render Function
-// ======================================
-
-function renderTodos() {
-    todoList.innerHTML = "";
-
-    for (const todo of todos) {
-
-        // Create Elements
+function createTodoItem(todo){
+ // Create Elements
         const li = document.createElement("li");
 
         const span = document.createElement("span");
@@ -102,8 +93,7 @@ function renderTodos() {
             if (index !== -1) {
                 todos.splice(index, 1);
             }
-
-            saveTodos();
+             saveTodos();
             renderTodos();
         });
 
@@ -115,9 +105,31 @@ function renderTodos() {
         li.appendChild(completeButton);
         li.appendChild(editButton);
         li.appendChild(deleteButton);
+         return li;
 
-        todoList.appendChild(li);
     }
+
+    function updateStats(){
+        const total= todos.length;
+        totalTasks.textContent=total;
+        const completed= todos.filter(item=>item.completed).length;
+        completedTasks.textContent=completed;
+        remainingTasks.textContent=total-completed;
+    }
+// ======================================
+// Render Function
+// ======================================
+
+function renderTodos() {
+    todoList.innerHTML = "";
+
+    for (const todo of todos) {
+
+      const todoItem=createTodoItem(todo);
+        
+        todoList.appendChild(todoItem);
+    }
+        updateStats();
 }
 
 // ======================================
