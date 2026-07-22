@@ -7,6 +7,8 @@ const todos = JSON.parse(localStorage.getItem("todos")) || [];
 // ======================================
 // DOM Elements
 // ======================================
+const completedVisual=document.querySelector(".completed");
+const remainingVisual=document.querySelector(".remaining");
 const searchInput = document.getElementById("search-input");
 const todoInput = document.getElementById("todo-input");
 const addButton = document.getElementById("add-btn");
@@ -119,6 +121,22 @@ function createTodoItem(todo){
         const completed= todos.filter(item=>item.completed).length;
         completedTasks.textContent=completed;
         remainingTasks.textContent=total-completed;
+        
+        if (total === 0) {
+    completedVisual.style.width = "0%";
+    remainingVisual.style.width = "0%";
+    completedVisual.textContent="0";
+    remainingVisual.textContent="0";
+} else {
+    let comVisual=(completed / total) * 100;
+    let remainVisual=((total - completed) / total) * 100;
+    completedVisual.style.width = `${comVisual}%`;
+    remainingVisual.style.width = `${remainVisual}%`;
+
+    comVisual===0? completedVisual.textContent=null : completedVisual.textContent="Completed: "+comVisual+"%";
+   remainVisual===0? remainingVisual.textContent=null: remainingVisual.textContent="Remaining: "+remainVisual+"%";
+    
+}
     }
 // ======================================
 // Render Function
@@ -168,3 +186,5 @@ addButton.addEventListener("click", () => {
 // ======================================
 
 renderTodos();
+
+
