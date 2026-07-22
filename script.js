@@ -128,8 +128,8 @@ function createTodoItem(todo){
     completedVisual.textContent="0";
     remainingVisual.textContent="0";
 } else {
-    let comVisual=(completed / total) * 100;
-    let remainVisual=((total - completed) / total) * 100;
+    let comVisual=Math.round((completed / total) * 100);
+    let remainVisual=Math.round(((total - completed) / total) * 100);
     completedVisual.style.width = `${comVisual}%`;
     remainingVisual.style.width = `${remainVisual}%`;
 
