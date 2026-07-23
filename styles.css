@@ -1,3 +1,5 @@
+
+
 button{
     margin: 1em .5em;
     padding: 4px 8px;
@@ -10,13 +12,14 @@ button{
 button:hover{
     background-color: rgb(110, 12, 201);
 }
+ul{
+    list-style: none;
+}
 ul li{
     margin: 0 .5em;
 }
 
-li::marker{
-    color:blueviolet
-}
+
 .container{
     margin: 2em auto;
     background-color: rgb(238, 231, 220);
@@ -24,7 +27,7 @@ li::marker{
     padding: 5em 3em;
     border-radius: 1em;
 }
-input{
+   .input-container input{
     width: 60%;
     padding: .5em .2em;
     border-radius: 6px;

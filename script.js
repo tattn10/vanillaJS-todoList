@@ -28,11 +28,14 @@ function saveTodos() {
 function createTodoItem(todo){
  // Create Elements
         const li = document.createElement("li");
-
+        
+        const checkBox= document.createElement("input");
+        checkBox.setAttribute('type','checkbox');
+        checkBox.checked = todo.completed;
         const span = document.createElement("span");
         span.textContent = todo.text;
         
-        const completeButton = document.createElement("button");
+
         const editButton = document.createElement("button");
         const deleteButton = document.createElement("button");
 
@@ -43,11 +46,8 @@ function createTodoItem(todo){
         if (todo.completed) {
             span.style.textDecoration = "line-through";
             span.style.color = "gray";
-            completeButton.textContent = "Undo";
-        } else {
-            completeButton.textContent = "Complete";
         }
-
+       
         // -------------------------
         // Edit Button
         // -------------------------
@@ -64,13 +64,9 @@ function createTodoItem(todo){
         // ======================================
         // Event Listeners
         // ======================================
-        searchInput.addEventListener("input", () => {
 
-    renderTodos();
-
-});
-        completeButton.addEventListener("click", () => {
-            todo.completed = !todo.completed;
+        checkBox.addEventListener("change", ()=> {
+            todo.completed= checkBox.checked;
             saveTodos();
             renderTodos();
         });
@@ -105,9 +101,8 @@ function createTodoItem(todo){
         // ======================================
         // Append Elements
         // ======================================
-
+        li.appendChild(checkBox);
         li.appendChild(span);
-        li.appendChild(completeButton);
         li.appendChild(editButton);
         li.appendChild(deleteButton);
 
@@ -160,7 +155,11 @@ function renderTodos() {
 // ======================================
 // Event Listeners
 // ======================================
+        searchInput.addEventListener("input", () => {
 
+    renderTodos();
+
+});
 addButton.addEventListener("click", () => {
 
     const taskText = todoInput.value.trim();
